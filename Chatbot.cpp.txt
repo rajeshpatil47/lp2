@@ -1,0 +1,78 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+// Helper to convert input to lowercase
+string toLower(string str) {
+    transform(str.begin(), str.end(), str.begin(), ::tolower);
+    return str;
+}
+
+void showMenu() {
+    cout << "\nWelcome to HelpBot - Your Customer Assistant!\n";
+    cout << "--------------------------------------------\n";
+    cout << "Please select an option:\n";
+    cout << "1. Order-related queries\n";
+    cout << "2. Technical support\n";
+    cout << "3. Give feedback\n";
+    cout << "4. Exit\n";
+    cout << "--------------------------------------------\n";
+    cout << "Enter your choice (1-4): ";
+}
+
+int main() {
+    int choice;
+    string input;
+
+    while (true) {
+        showMenu();
+        cin >> choice;
+        cin.ignore(); // To handle newline character
+
+        if (choice == 4) {
+            cout << "Bot: Thank you for using HelpBot. Goodbye!\n";
+            break;
+        }
+
+        switch (choice) {
+            case 1:
+                cout << "Bot: What would you like to know about your order?\n";
+                cout << "You: ";
+                getline(cin, input);
+                input = toLower(input);
+                if (input.find("status") != string::npos)
+                    cout << "Bot: Your order is currently being processed.\n";
+                else if (input.find("cancel") != string::npos)
+                    cout << "Bot: You can cancel your order within 1 hour of placement.\n";
+                else
+                    cout << "Bot: I'm sorry, I don't understand that order question.\n";
+                break;
+
+            case 2:
+                cout << "Bot: Please describe your technical issue:\n";
+                cout << "You: ";
+                getline(cin, input);
+                input = toLower(input);
+                if (input.find("login") != string::npos)
+                    cout << "Bot: Please reset your password using the 'Forgot Password' option.\n";
+                else if (input.find("error") != string::npos)
+                    cout << "Bot: Can you provide the error code or message you saw?\n";
+                else
+                    cout << "Bot: Our support team will contact you shortly regarding this issue.\n";
+                break;
+
+            case 3:
+                cout << "Bot: We appreciate your feedback! Please enter it below:\n";
+                cout << "You: ";
+                getline(cin, input);
+                cout << "Bot: Thank you for your feedback. It helps us improve.\n";
+                break;
+
+            default:
+                cout << "Bot: Invalid option. Please choose between 1 and 4.\n";
+        }
+    }
+
+    return 0;
+}

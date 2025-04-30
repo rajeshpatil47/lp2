@@ -1,0 +1,109 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void findBFS(vector<vector<int>>&adj,int n){
+    queue<int>q;
+    int vis[n]={0};
+    q.push(0);
+    vis[0]=1;
+    
+    while(!q.empty()){
+        int curnode = q.front();
+        q.pop();
+        cout<<curnode<<" ";
+        
+        for(auto it:adj[curnode]){
+            if(!vis[it]){
+                q.push(it);
+                vis[it]=1;
+            }
+        }
+    }
+    return;
+}
+
+int main()
+{
+    int n,m;
+    cout<<"Enter the number of nodes and edges : "<<endl;
+    cin>>n>>m;
+    
+    vector<vector<int>>adj(n);
+    
+    for(int i=0;i<m;i++){
+        int u,v;
+        cin>>u>>v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    
+    for(int i=0;i<n;i++){
+        cout<<i<<" -> ";
+        for(auto it:adj[i])cout<<it<<" ";
+        cout<<endl;
+    }
+    
+    findBFS(adj,n);
+    cout<<"This is BFS of the graph.";
+    
+    return 0;
+}
+
+
+
+
+/*  recursive - 
+#include <bits/stdc++.h>
+using namespace std;
+
+void bfsRecursive(queue<int>& q, vector<vector<int>>& adj, vector<int>& vis) {
+    if (q.empty()) return;
+
+    int curnode = q.front();
+    q.pop();
+    cout << curnode << " ";
+
+    for (int neighbor : adj[curnode]) {
+        if (!vis[neighbor]) {
+            vis[neighbor] = 1;
+            q.push(neighbor);
+        }
+    }
+
+    bfsRecursive(q, adj, vis); // recursive call
+}
+
+void findBFS(vector<vector<int>>& adj, int n) {
+    vector<int> vis(n, 0);
+    queue<int> q;
+    q.push(0);
+    vis[0] = 1;
+
+    bfsRecursive(q, adj, vis);
+}
+
+int main() {
+    int n, m;
+    cout << "Enter the number of nodes and edges : " << endl;
+    cin >> n >> m;
+
+    vector<vector<int>> adj(n);
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    for (int i = 0; i < n; i++) {
+        cout << i << " -> ";
+        for (auto it : adj[i]) cout << it << " ";
+        cout << endl;
+    }
+
+    findBFS(adj, n);
+    cout << "\nThis is BFS of the graph." << endl;
+
+    return 0;
+}
+*/

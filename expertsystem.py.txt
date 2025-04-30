@@ -1,0 +1,65 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+// Helper to convert string to lowercase
+string toLower(string str) {
+    transform(str.begin(), str.end(), str.begin(), ::tolower);
+    return str;
+}
+
+// Knowledge base: rules based on symptoms
+string diagnose(const vector<string>& symptoms) {
+    bool hasFever = false, hasCough = false, hasChestPain = false;
+    bool hasHeadache = false, hasBreathingProblem = false;
+    bool hasStomachPain = false, hasRash = false;
+
+    for (string s : symptoms) {
+        s = toLower(s);
+        if (s == "fever") hasFever = true;
+        else if (s == "cough") hasCough = true;
+        else if (s == "chest pain") hasChestPain = true;
+        else if (s == "headache") hasHeadache = true;
+        else if (s == "breathing problem") hasBreathingProblem = true;
+        else if (s == "stomach pain") hasStomachPain = true;
+        else if (s == "rash") hasRash = true;
+    }
+
+    // Rule-based decision tree
+    if (hasChestPain) return "You should consult a Cardiologist.";
+    if (hasFever && hasCough && hasBreathingProblem) return "You might have a respiratory infection. Consult a Pulmonologist.";
+    if (hasFever && hasRash) return "Possible viral infection. Consult a General Physician.";
+    if (hasFever && hasStomachPain) return "Possible food infection. Consult a Gastroenterologist.";
+    if (hasFever && hasHeadache) return "You may need a Neurologist or General Physician.";
+    if (hasStomachPain) return "Consult a Gastroenterologist.";
+    if (hasHeadache) return "Consult a Neurologist.";
+    if (hasRash) return "Consult a Dermatologist.";
+    if (hasFever) return "Consult a General Physician.";
+
+    return "Insufficient data. Please consult a General Physician for further guidance.";
+}
+
+int main() {
+    int n;
+    cout << "Welcome to the Medical Expert System\n";
+    cout << "How many symptoms do you have? ";
+    cin >> n;
+
+    vector<string> symptoms;
+    string temp;
+    cin.ignore();
+
+    cout << "Enter your symptoms (one per line):\n";
+    for (int i = 0; i < n; i++) {
+        getline(cin, temp);
+        symptoms.push_back(temp);
+    }
+
+    string result = diagnose(symptoms);
+    cout << "\nDiagnosis: " << result << endl;
+
+    return 0;
+}

@@ -1,0 +1,33 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void findDFS(vector<vector<int>>&adj,int i,int vis[]){
+    vis[i]=1;
+    cout<<i<<" ";
+    
+    for(auto it:adj[i]){
+        if(!vis[it]){
+            findDFS(adj,it,vis);
+        }
+    }
+    return ;
+    
+    
+}
+
+int main(){
+    int n,m;
+    cin>>n>>m;
+    
+    vector<vector<int>>adj(n);
+    for(int i=0;i<m;i++){
+        int u,v;
+        cin>>u>>v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    int vis[n]={0};
+    findDFS(adj,0,vis);
+    
+    return 0;
+}
